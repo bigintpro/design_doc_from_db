@@ -1,2 +1,8 @@
 
-hello: "abc"
+db:
+  user: CYY
+  password: Nhu2023
+  host: 172.32.10.189
+  port: 1521
+  service_name: ORCL
+
