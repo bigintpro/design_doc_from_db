@@ -19,15 +19,13 @@ class NHCDbDocxServiceImpl(DocxService):
     def __init__(self, docx: Document):
         self.docx = docx
 
-    def insert_tables(self,table_beans: List[TableBean])->None:
+    def insert_tables(self, table_beans: List[TableBean]) -> None:
         """插入多张表格"""
         if table_beans is None or len(table_beans) == 0:
             return
 
         for table_bean in table_beans:
             self.insert_table(table_bean)
-
-
 
     def insert_table(self, table_bean: TableBean) -> None:
         """插入一张表格"""
@@ -44,6 +42,7 @@ class NHCDbDocxServiceImpl(DocxService):
 
         # 设置标题的背景颜色
         CellService.set_background_color_for_cells("#D2D2D2", cells)
+        CellService.set_font_size_for_cells(8, cells)
 
         # 添加具体数据
         for column_bean in table_bean.table_columns:
@@ -58,21 +57,22 @@ class NHCDbDocxServiceImpl(DocxService):
             cells[7].text = "TRUE" if column_bean.primary_column else "FALSE"
             cells[8].text = "FALSE"
             cells[9].text = ""
+            CellService.set_font_size_for_cells(6, cells)
 
         # 设置表格的宽度和高度
         CellService.set_height_for_row(0.5, table.rows)
-        CellService.set_width_for_column(0.2, [table.columns[0]])
-        CellService.set_width_for_column(0.5, [table.columns[1]])
-        CellService.set_width_for_column(0.5, [table.columns[2]])
-        CellService.set_width_for_column(0.5, [table.columns[3]])
-        CellService.set_width_for_column(0.5, [table.columns[9]])
+        CellService.set_width_for_column(0.1, [table.columns[0]])
+        CellService.set_width_for_column(0.4, [table.columns[1]])
+        CellService.set_width_for_column(0.4, [table.columns[2]])
+        CellService.set_width_for_column(0.3, [table.columns[3]])
+        CellService.set_width_for_column(0.2, [table.columns[4]])
+        CellService.set_width_for_column(0.2, [table.columns[5]])
+        CellService.set_width_for_column(0.2, [table.columns[6]])
+        CellService.set_width_for_column(0.2, [table.columns[7]])
+        CellService.set_width_for_column(0.3, [table.columns[8]])
+        CellService.set_width_for_column(1, [table.columns[9]])
 
         # 设置
-
-
-
-
-
 
     def insert_title(self):
         pass
