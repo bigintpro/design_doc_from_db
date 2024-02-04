@@ -2,13 +2,13 @@ from typing import List
 
 from docx.document import Document
 from docx.shared import RGBColor
-from docx.table import Table, _Row
+from docx.table import Table
 from docx.text.paragraph import Paragraph
 
 from beans.TableBean import TableBean
 from driver.docx.DocxService import DocxService
 from driver.docx.cell.CellService import CellService
-from driver.docx.impl.NHCDbTemplate import NHCDbTemplate
+from driver.docx.template.NHCDbTemplate import NHCDbTemplate
 
 
 class NHCDbDocxServiceImpl(DocxService):

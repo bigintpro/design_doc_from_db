@@ -13,4 +13,8 @@
 
 
 
-gi
+
+
+# 依赖库
++ [python-docx](https://python-docx.readthedocs.io/en/latest/user/quickstart.html#applying-a-paragraph-style)
++ [openpyxl](https://openpyxl.readthedocs.io/en/stable/tutorial.html)
