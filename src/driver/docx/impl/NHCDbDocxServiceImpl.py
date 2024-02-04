@@ -1,7 +1,9 @@
 from typing import List
 
 from docx.document import Document
+from docx.shared import RGBColor
 from docx.table import Table, _Row
+from docx.text.paragraph import Paragraph
 
 from beans.TableBean import TableBean
 from driver.docx.DocxService import DocxService
@@ -33,7 +35,9 @@ class NHCDbDocxServiceImpl(DocxService):
         if table_bean is None:
             return
         # 添加标题
-        self.docx.add_heading("{0}({1})".format(table_bean.table_comment, table_bean.table_name))
+        header: Paragraph = self.docx.add_heading(text="{0}({1})".format(table_bean.table_comment, table_bean.table_name))
+        header.runs[0].font.color.rgb = RGBColor(0, 0, 0)
+
         # 添加表格第一行title
         table: Table = self.docx.add_table(rows=0, cols=10)
         cells = table.add_row().cells
@@ -48,10 +52,10 @@ class NHCDbDocxServiceImpl(DocxService):
         for column_bean in table_bean.table_columns:
             cells = table.add_row().cells
             cells[0].text = str(column_bean.column_id)
-            cells[1].text = column_bean.comment
+            cells[1].text = column_bean.comment if column_bean.comment is not None else ""
             cells[2].text = column_bean.column_name
             cells[3].text = column_bean.data_type
-            cells[4].text = str(column_bean.data_length)
+            cells[4].text = str(column_bean.data_length) if column_bean.data_length is not None else ""
             cells[5].text = str(column_bean.data_precision) if column_bean.data_precision is not None else ""
             cells[6].text = "TRUE" if column_bean.nullable == "Y" else "FALSE"
             cells[7].text = "TRUE" if column_bean.primary_column else "FALSE"
