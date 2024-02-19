@@ -1,35 +1,32 @@
 from openpyxl import Workbook
-from openpyxl.styles import Font
-from openpyxl.chart import BarChart, Reference
-from openpyxl.worksheet.worksheet import Worksheet
+from openpyxl.worksheet.table import Table, TableStyleInfo
 
 if __name__ == '__main__':
     wb = Workbook()
-    ws:Worksheet = wb.active()
-    ws.title="abc"
-    # print(ws)
+    ws = wb.active
 
-    treeData = [["Type", "Leaf Color", "Height"], ["Maple", "Red", 549], ["Oak", "Green", 783], ["Pine", "Green", 1204]]
-    for row in treeData:
+    data = [
+        ['Apples', 10000, 5000, 8000, 6000],
+        ['Pears', 2000, 3000, 4000, 5000],
+        ['Bananas', 6000, 6000, 6500, 6000],
+        ['Oranges', 500, 300, 200, 700],
+    ]
+
+    # add column headings. NB. these must be strings
+    ws.append(["Fruit", "2011", "2012", "2013", "2014"])
+    for row in data:
         ws.append(row)
 
-    ft = Font(bold=True)
-    for row in ws["A1:C1"]:
-        for cell in row:
-            cell.font = ft
+    tab = Table(displayName="Table1", ref="A1:E5")
 
+    # Add a default style with striped rows and banded columns
+    style = TableStyleInfo(name="TableStyleMedium9", showFirstColumn=True,
+                           showLastColumn=True, showRowStripes=False, showColumnStripes=False)
+    tab.tableStyleInfo = style
 
-    chart = BarChart()
-    chart.type = "col"
-    chart.title = "Tree Height"
-    chart.y_axis.title = 'Height (cm)'
-    chart.x_axis.title = 'Tree Type'
-    chart.legend = None
-
-    data = Reference(ws, min_col=3, min_row=2, max_row=4, max_col=3)
-
-    categories = Reference(ws, min_col=1, min_row=2, max_row=4, max_col=1)
-    chart.add_data(data)
-    chart.set_categories(categories)
-    ws.add_chart(chart, "E1")
-    wb.save("TreeData.xlsx")
+    '''
+    Table must be added using ws.add_table() method to avoid duplicate names.
+    Using this method ensures table name is unque through out defined names and all other table name. 
+    '''
+    ws.add_table(tab)
+    wb.save("table.xlsx")
