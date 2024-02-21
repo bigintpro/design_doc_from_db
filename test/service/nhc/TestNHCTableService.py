@@ -1,15 +1,17 @@
 import json
 import unittest
 
-from dataclasses_json import DataClassJsonMixin
-
 from beans.TableBean import TableBean
-from service.NHCTableService import NHCTableService
+from service.nhc.NHCTableService import NHCTableService
 
 
 class TestNHCTableService(unittest.TestCase):
     def test_get_grouped_all_table_names(self):
-        names = ['TPMDE01', 'TPMDE02', 'TPMIM02', 'TPMIM03', 'TPMSF07', 'TPMSF05', 'TPMSY01', 'TPMSM02', 'TODOITEM', 'TNMCG01', 'TPMSM12', 'TPMSM13', 'TPMSM06', 'TPMSM07', 'TPMSM08', 'TPMSM09', 'TSYCG01', 'TSYCG02', 'TPMMA01', 'TPMMA03', 'TPMMA04', 'TPMUN01', 'TNMBL01', 'TNMBL02', 'T_PM_SUBSYS', 'TPMSF01', 'TPMSF02', 'TPMSF03', 'TPMSF04', 'TPMUD01', 'TPMDE03', 'TPMSF06', 'TPSXD04', 'TPSXD05', 'TPSXD01', 'TPSXD02', 'TPSXD03', 'TPMIM01', 'TPMSM50']
+        names = ['TPMDE01', 'TPMDE02', 'TPMIM02', 'TPMIM03', 'TPMSF07', 'TPMSF05', 'TPMSY01', 'TPMSM02', 'TODOITEM',
+                 'TNMCG01', 'TPMSM12', 'TPMSM13', 'TPMSM06', 'TPMSM07', 'TPMSM08', 'TPMSM09', 'TSYCG01', 'TSYCG02',
+                 'TPMMA01', 'TPMMA03', 'TPMMA04', 'TPMUN01', 'TNMBL01', 'TNMBL02', 'T_PM_SUBSYS', 'TPMSF01', 'TPMSF02',
+                 'TPMSF03', 'TPMSF04', 'TPMUD01', 'TPMDE03', 'TPMSF06', 'TPSXD04', 'TPSXD05', 'TPSXD01', 'TPSXD02',
+                 'TPSXD03', 'TPMIM01', 'TPMSM50']
         dict = NHCTableService.get_grouped_all_table_names(names)
         print(dict)
         self.assertIsNotNone(dict)

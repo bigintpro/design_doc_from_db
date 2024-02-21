@@ -26,7 +26,7 @@ class NHCDBXlsxTemplate:
             tmp.append(str(table_column.data_scale) if table_column.data_scale is not None else "")
             tmp.append("")
             tmp.append(str(table_column.data_default) if table_column.data_default is not None else "")
-            tmp.append("TRUE" if table_column.primary_column else "FALSE")
+            tmp.append("PK" if table_column.primary_column else "")
             tmp.append("FALSE" if table_column.nullable == 'Y' else "TRUE")
             tmp.append("")
             data.append(tmp)

@@ -14,8 +14,12 @@ class XlsxServiceImpl(XlsxService):
     template: NHCDBXlsxTemplate = None
 
     ali = Alignment(horizontal='center', vertical='center')
+    # 内容字体颜色
     font = Font(name='Arial', size=8, color='000000')
+    # 第二行标题颜色
     title_font = Font(name='Arial', size=10, color='000000', bold=True)
+    # 第一行字体颜色
+    first_row_font = Font(name='Arial', size=15, color='000000', bold=True)
     border = Border(left=Side(style='thin'),
                     right=Side(style='thin'),
                     top=Side(style='thin'),
@@ -45,9 +49,10 @@ class XlsxServiceImpl(XlsxService):
         end_column = len(NHCDBXlsxTemplate.title)
         end_row = len(table_bean.table_columns) + 2 + row_offset
         worksheet.merge_cells(start_row=1 + row_offset, end_row=1 + row_offset, start_column=1, end_column=end_column)
-        merge_cell = worksheet.cell(row=1 + row_offset, column=1,
-                                    value=table_bean.table_name + '-' + table_bean.table_comment)
-        merge_cell.font = self.title_font
+
+        table_title = table_bean.table_name + '-' + (table_bean.table_comment or "")
+        merge_cell = worksheet.cell(row=1 + row_offset, column=1, value=table_title)
+        # merge_cell.font = self.first_row_font
         # 添加第二行表头
         worksheet.append(NHCDBXlsxTemplate.title)
 
@@ -56,26 +61,26 @@ class XlsxServiceImpl(XlsxService):
         for table_column in table_column_list:
             worksheet.append(table_column)
 
-        # 设置列宽
+        # todo 设置列宽 改成动态的
         worksheet.column_dimensions['A'].width = 10
         worksheet.column_dimensions['B'].width = 20
         worksheet.column_dimensions['C'].width = 20
         worksheet.column_dimensions['D'].width = 20
         worksheet.column_dimensions['E'].width = 20
-        worksheet.column_dimensions['F'].width = 15
-        worksheet.column_dimensions['G'].width = 15
-        worksheet.column_dimensions['H'].width = 15
-        worksheet.column_dimensions['I'].width = 15
-        worksheet.column_dimensions['G'].width = 15
-        worksheet.column_dimensions['K'].width = 15
+        worksheet.column_dimensions['F'].width = 10
+        worksheet.column_dimensions['G'].width = 10
+        worksheet.column_dimensions['H'].width = 10
+        worksheet.column_dimensions['I'].width = 10
+        worksheet.column_dimensions['J'].width = 10
+        worksheet.column_dimensions['K'].width = 10
         worksheet.column_dimensions['L'].width = 20
 
         # 设置行高
 
-        worksheet.row_dimensions[1 + row_offset].height = 20
-        worksheet.row_dimensions[2 + row_offset].height = 30
+        worksheet.row_dimensions[1 + row_offset].height = 25
+        worksheet.row_dimensions[2 + row_offset].height = 20
         for index, value in enumerate(table_column_list):
-            worksheet.row_dimensions[index + row_offset + 3].height = 35
+            worksheet.row_dimensions[index + row_offset + 3].height = 25
 
         # 设置边框样式
         for row in worksheet.iter_rows(min_row=1 + row_offset, max_row=end_row, min_col=1, max_col=end_column):
@@ -86,6 +91,10 @@ class XlsxServiceImpl(XlsxService):
         for row in worksheet.iter_rows(min_row=2 + row_offset, max_row=2 + row_offset, min_col=1, max_col=end_column):
             for cell in row:
                 cell.font = self.title_font
+
+        for row in worksheet.iter_rows(min_row=1 + row_offset, max_row=1 + row_offset, min_col=1, max_col=end_column):
+            for cell in row:
+                cell.font = self.first_row_font
 
         # 设置全部单元格居中显示
         for row in worksheet.iter_rows():
