@@ -1,4 +1,3 @@
-import json
 import unittest
 
 from docx import Document
@@ -14,16 +13,16 @@ class TestNHCDbDocxServiceImpl(unittest.TestCase):
 
         # beans = json.loads(bean_str)
         # beans = [TableBean.from_json(bean) for bean in bean_str ]
-        beans = TableBean.schema().loads(bean_str,many=True)
+        beans = TableBean.schema().loads(bean_str, many=True)
 
         docx: Document = Document()
 
         service = NHCDbDocxServiceImpl(docx)
-        service.insert_tables(beans)
+        classify_list: Dict[str, List[TableBean]] = NHCModuleClassifyService.module_classify(beans)
+        for key, value in classify_list.items():
+            if len(value) > 0:
+                service.insert_tables(key, value)
         docx.save("text.docx")
-
-
-
 
         self.assertEqual(True, True)  # add assertion here
 

@@ -8,14 +8,13 @@ class DocxService(ABC):
     """文档服务器"""
 
     @abstractmethod
-    def insert_tables(self, table_beans: List[TableBean]) -> None:
+    def insert_tables(self, module_name: str, table_beans: List[TableBean]) -> None:
         """插入多张表格"""
 
         pass
 
-
     @abstractmethod
-    def insert_table(self,table_bean: TableBean):
+    def insert_table(self, table_bean: TableBean):
         """插入一张表格"""
         pass
 
@@ -27,7 +26,3 @@ class DocxService(ABC):
     @abstractmethod
     def save(self):
         pass
-
-
-
-
