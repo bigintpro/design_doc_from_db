@@ -8,3 +8,7 @@ class TestConfig(TestCase):
         data = Config.get_by_key("db")
         print(data)
         self.assertTrue(data is not None)
+
+    def test_get_module_tree(self):
+        data = Config.get_module_tree()
+        print(data)

@@ -26,7 +26,7 @@ class NHCDbDocxServiceImpl(DocxService):
         if table_beans is None or len(table_beans) == 0:
             return
         # 添加模块名称
-        header: Paragraph = self.docx.add_heading(text=module_name, level=1)
+        header: Paragraph = self.docx.add_heading(text=module_name, level=2)
         header.runs[0].font.color.rgb = RGBColor(0, 0, 0)
         for table_bean in table_beans:
             self.insert_table(table_bean)
@@ -38,7 +38,7 @@ class NHCDbDocxServiceImpl(DocxService):
             return
         # 添加表标题
         header: Paragraph = self.docx.add_heading(
-            text="{0}({1})".format(table_bean.table_comment, table_bean.table_name), level=2)
+            text="{0}({1})".format(table_bean.table_comment, table_bean.table_name), level=3)
         header.runs[0].font.color.rgb = RGBColor(0, 0, 0)
 
         # 添加表格第一行title
@@ -81,8 +81,10 @@ class NHCDbDocxServiceImpl(DocxService):
 
         # 设置
 
-    def insert_title(self):
-        pass
+    def insert_title(self, title_name: str, level: int):
+        # 添加表标题
+        header: Paragraph = self.docx.add_heading(text=title_name, level=level)
+        header.runs[0].font.color.rgb = RGBColor(0, 0, 0)
 
     def save(self):
         self.docx.save("/Users/joy/Desktop/test.docx")

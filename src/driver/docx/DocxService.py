@@ -19,8 +19,8 @@ class DocxService(ABC):
         pass
 
     @abstractmethod
-    def insert_title(self):
-        """插入一张"""
+    def insert_title(self, title_name: str, level: int):
+        """插入level等级标题 h1 对应 1 h2 对应 2"""
         pass
 
     @abstractmethod
